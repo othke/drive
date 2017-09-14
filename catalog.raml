@@ -1,0 +1,63 @@
+#%RAML 1.0
+title: catalog
+version: v1
+baseUri: /
+
+types: 
+  Catalog:
+    properties: 
+          id: string
+          type: string
+          complete: boolean
+          creation: datetime
+          udpate: datetime
+      example:
+        id: "cd46dac4-15e9-4bb7-876c-1b7121043079"
+        type: "student"
+        complete: true
+        creation: "2017-09-14T20:22:05.698Z"
+        update: "2017-09-14T20:22:05.698Z"
+  
+  Document:
+    properties:
+      id: string
+      catalog_id: string
+      title: string
+      type: string
+      valid: boolean
+      creation: datetime
+      update: datetime
+    example:
+      id: "cd46dac4-15e9-4bb7-876c-1b7121043079"
+      catalog_id: "cd46dac4-15e9-4bb7-876c-1b7121043079"
+      title: "ID card M. XXX"
+      type: "id_card"
+      valid: true
+      creation: "2017-09-14T20:22:05.698Z"
+      update: "2017-09-14T20:22:05.698Z"
+
+resourceTypes: 
+  collection:
+    description: Collection of available <<resourcePathName>> in the catalog
+    get:
+      description: Get a list of <<resourcePathName>>
+      responses:
+        200:
+          body:
+            application/json: |
+                          <<exampleCollection>>
+    post:
+      description: Add a new <<resourcePathName|!sigularize>> in the catalog
+      body:
+        application/json:
+                  type: <<resourcePathName|!singularize>>
+                  example: |
+                    <<exampleItem>>
+        responses:
+          200:
+            body:
+              application/json:
+                              example: |
+                                {"message": "The <<resourcePathName|!singularize>> has been properly entered"}
+
+
